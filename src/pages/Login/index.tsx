@@ -7,22 +7,34 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  Link as LinkMUI,
 } from "@material-ui/core";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Container, LoginBox } from "./styles";
 import { useForm, Controller } from "react-hook-form";
+import {
+  fazerLogin
+} from '../../services/usuarioService';
 
 type LoginFormType = {
   email: string;
   senha: string;
 };
 
+interface LoginProps {
+  email: string;
+  senha: string;
+}
+
 export default function Login() {
-  const { control } = useForm<LoginFormType>();
+
+  function handleLogin(values: LoginProps) {
+    fazerLogin(values.email, values.senha);
+  }
+
+  const { control, handleSubmit } = useForm<LoginFormType>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleShowPassword = () => setShowPassword((prevState) => !prevState);
+  const handleShowPassword = () => setShowPassword((prevState: boolean) => !prevState);
 
   return (
     <Container>
@@ -47,7 +59,7 @@ export default function Login() {
                   <InputAdornment position="end">
                     <IconButton
                       onClick={handleShowPassword}
-                      onMouseDown={(e) => e.preventDefault()}
+                      onMouseDown={(e: any) => e.preventDefault()}
                     >
                       {showPassword ? <FiEye /> : <FiEyeOff />}
                     </IconButton>
@@ -70,7 +82,7 @@ export default function Login() {
             Esqueci a senha
           </LinkMUI>
         </Box>
-        <Button component={Link} to="/home">
+        <Button onClick={handleSubmit(handleLogin)} >
           Entrar
         </Button>
       </LoginBox>
