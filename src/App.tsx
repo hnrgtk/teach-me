@@ -1,10 +1,22 @@
 import React from "react";
+import Routes from "./routes";
+import { CssBaseline } from "@material-ui/core";
+import { StylesProvider, ThemeProvider } from "@material-ui/core/styles";
 
-import Routes from './routes';
-
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { theme } from "./styles";
 function App() {
   return (
-    <Routes />
+    <>
+      <CssBaseline />
+      <StylesProvider injectFirst>
+        <StyledThemeProvider theme={theme}>
+          <ThemeProvider theme={theme}>
+            <Routes />
+          </ThemeProvider>
+        </StyledThemeProvider>
+      </StylesProvider>
+    </>
   );
 }
 
