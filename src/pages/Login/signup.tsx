@@ -1,13 +1,13 @@
-import React, { useState } from "react";
 import { CircularProgress, Grid, Typography } from "@material-ui/core";
 import useAxios from "axios-hooks";
 import moment from "moment";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { MaskedInputCTL } from "../../components/InputTM/maskedInput";
 import { AutoCompleteCTL } from "../../components/SelectTM/AutoCompleteCTL";
-import { signUp } from "../../services/userServices";
-import { Container, LoginBox, SignInButton } from "./styles";
+import { signUp, SignUpVariables } from "../../services/userServices";
+import { Container, SignInButton, SignUpBox } from "./styles";
 
 export type SignUpFormType = {
   nome: string;
@@ -45,8 +45,8 @@ export default function SignUp() {
       escolaridade: values.escolaridade.id,
       tipoDocumento: values.tipoDocumento.id,
       nuDocumento: values.nuDocumento,
-      telefone: values.telefone,
-    };
+      telefone: values.telefone.replace(/[^a-zA-Z0-9 ]/g, ""),
+    } as SignUpVariables;
 
     signUp(input, setLoading);
   }
@@ -54,7 +54,7 @@ export default function SignUp() {
   return (
     <>
       <Container>
-        <LoginBox>
+        <SignUpBox>
           <Typography align="center" variant="h5">
             Cadastro
           </Typography>
@@ -107,7 +107,10 @@ export default function SignUp() {
             <Grid item xs={4}>
               <InputCTL
                 label="UF"
-                onChange={(e: any) => console.log(e)}
+                inputProps={{ maxlength: 2 }}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  String(e.target.value).toUpperCase()
+                }
                 {...{ control, name: "uf" }}
               />
             </Grid>
@@ -123,7 +126,7 @@ export default function SignUp() {
               " Criar conta"
             )}
           </SignInButton>
-        </LoginBox>
+        </SignUpBox>
       </Container>
     </>
   );

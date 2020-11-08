@@ -2,7 +2,7 @@ import api from "../config/api";
 
 export function signIn(email: string, senha: string) {
   api
-    .post("v1/auth/login", {
+    .get("v1/auth/login", {
       headers: {
         email: email,
         senha: senha,
@@ -14,7 +14,7 @@ export function signIn(email: string, senha: string) {
     .catch((err) => console.log(err));
 }
 
-type SignUpVariables = {
+export type SignUpVariables = {
   nome: string;
   dataNascimento: string;
   email: string;
