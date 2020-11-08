@@ -20,7 +20,7 @@ export type SignUpVariables = {
   email: string;
   senha: string;
   telefone: string;
-  escolaridade: string;
+  escolaridadeId: string;
   tipoDocumento: string;
   nuDocumento: string;
   uf: string;
