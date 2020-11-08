@@ -39,3 +39,13 @@ export function signUp(
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));
 }
+
+export function auth(id: string) {
+  console.log(id)
+  api
+    .post("v1/usuario/validarCadastro", {
+      id,
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+}
