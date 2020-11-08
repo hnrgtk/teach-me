@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { InputCTL } from "../../components/InputTM/inputCTL";
-import { fazerLogin } from "../../services/usuarioService";
+import { signIn } from "../../services/userServices";
 import { Container, LoginBox, SignInButton } from "./styles";
 
 type LoginFormType = {
@@ -17,15 +17,14 @@ interface LoginProps {
 }
 
 export default function Login() {
-  function handleLogin(values: LoginProps) {
-    fazerLogin(values.email, values.senha);
-  }
-
   const { control, handleSubmit } = useForm<LoginFormType>();
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleShowPassword = () =>
     setShowPassword((prevState: boolean) => !prevState);
+
+  const handleLogin = (values: LoginProps) =>
+    signIn(values.email, values.senha);
 
   return (
     <>

@@ -1,20 +1,12 @@
-import { requestHandler } from './interceptor';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
+import { configure } from "axios-hooks";
 
-let api: AxiosInstance;
+const DEFAULT_URL = process.env.REACT_APP_API_URL;
 
-const DEFAULT_URL = process.env.REACT_APP_API_URL || "/api";
+const api: AxiosInstance = axios.create({
+  baseURL: DEFAULT_URL,
+});
 
-const instanceApi = () => {
+configure({ axios: api });
 
-  if (!api) {
-    api = axios.create({
-      baseURL: DEFAULT_URL
-    })
-  }
-  api = requestHandler(api);
-
-  return api;
-}
-
-export default instanceApi();
+export default api;

@@ -8,16 +8,17 @@ type ControlledProps = React.ComponentProps<typeof InputTM> &
 export const InputCTL = ({
   control,
   name,
-  onFocus,
+  onFocus: ignored,
+  onChange = (e) => e.target.value,
   ...rest
 }: ControlledProps) => (
   <Controller
-    render={({ onChange, ...props }) => (
+    render={(props) => (
       <InputTM
         {...props}
         {...rest}
-        onChange={(...e) => {
-          onChange(...e);
+        onChange={(e) => {
+          props.onChange(onChange(e));
         }}
       />
     )}

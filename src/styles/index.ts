@@ -9,9 +9,9 @@ export const MuiTheme = createMuiTheme({
     primary: {
       main: "#796eff",
       // light: "#6bcdcd",
-			// dark: "#6bcdcd",
+      // dark: "#6bcdcd",
     },
-    // secondary: { main: "#24c361" },
+    secondary: { main: "#fff" },
   },
   typography: {
     fontFamily: ["Open Sans", "sans-serif"].join(","),
