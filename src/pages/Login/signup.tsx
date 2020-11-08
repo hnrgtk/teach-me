@@ -42,7 +42,7 @@ export default function SignUp() {
       dataNascimento: moment(values.dataNascimento, "DD/MM/YYYY").toISOString(),
       cidade: values.cidade,
       uf: values.uf,
-      escolaridade: values.escolaridade.id,
+      escolaridadeId: values.escolaridade.id,
       tipoDocumento: values.tipoDocumento.id,
       nuDocumento: values.nuDocumento,
       telefone: values.telefone.replace(/[^a-zA-Z0-9 ]/g, ""),
