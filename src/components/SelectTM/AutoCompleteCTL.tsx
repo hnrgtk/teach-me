@@ -13,9 +13,20 @@ type Props = {
   options: OptionsType;
   name: string;
   control: Control;
+  rules?: {};
+  error?: boolean;
+  helperText?: any;
 };
 
-export function AutoCompleteCTL({ label, options, name, control }: Props) {
+export function AutoCompleteCTL({
+  label,
+  options,
+  name,
+  control,
+  rules,
+  error,
+  helperText,
+}: Props) {
   return (
     <Controller
       render={({ onChange, value = [], ...props }) => (
@@ -23,15 +34,22 @@ export function AutoCompleteCTL({ label, options, name, control }: Props) {
           options={options}
           getOptionLabel={(option) => option.label}
           renderOption={(option) => option.label}
-          renderInput={(params) => <InputTM {...params} label={label} />}
+          renderInput={(params) => (
+            <InputTM
+              {...params}
+              label={label}
+              error={!!error}
+              helperText={!!error && helperText}
+            />
+          )}
           onChange={(e, data) => onChange(data)}
           getOptionSelected={(option, value) => option.id === value.id}
           size="small"
           {...props}
         />
       )}
-      // @ts-ignore
-      onChange={([, data]) => data}
+      onChange={(data: any) => data}
+      rules={rules}
       name={name}
       control={control}
     />

@@ -12,12 +12,18 @@ export function MaskedInputTM(props: Props) {
 type ControlledProps = React.ComponentPropsWithoutRef<typeof MaskedInputTM> &
   Omit<React.ComponentProps<typeof Controller>, "as">;
 
-export function MaskedInputCTL({ control, name, ...rest }: ControlledProps) {
+export function MaskedInputCTL({
+  control,
+  name,
+  rules,
+  ...rest
+}: ControlledProps) {
   return (
     <Controller
       as={MaskedInputTM}
       name={name ?? ""}
       control={control}
+      rules={rules}
       defaultValue=""
       {...rest}
     />

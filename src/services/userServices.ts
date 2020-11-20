@@ -40,12 +40,13 @@ export function signUp(
     .finally(() => setLoading(false));
 }
 
-export function auth(id: string) {
-  console.log(id)
+export function auth(
+  id: string,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) {
   api
-    .post("v1/usuario/validarCadastro", {
-      id,
-    })
+    .get(`v1/usuario/validarCadastro?cadastro=${id}`)
     .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => setLoading(false));
 }

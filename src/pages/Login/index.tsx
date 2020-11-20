@@ -1,29 +1,25 @@
-import { Box, IconButton, InputAdornment, Typography } from "@material-ui/core";
 import React, { useState } from "react";
+
+import { Box, IconButton, InputAdornment, Typography } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { signIn } from "../../services/userServices";
 import { Container, LoginBox, SignInButton } from "./styles";
-
-type LoginFormType = {
-  email: string;
-  senha: string;
-};
-interface LoginProps {
-  email: string;
-  senha: string;
-}
+import { yupResolver } from "@hookform/resolvers/yup";
+import { LoginFormType, loginSchema } from "./formType";
 
 export default function Login() {
-  const { control, handleSubmit } = useForm<LoginFormType>();
+  const { control, handleSubmit, errors } = useForm<LoginFormType>({
+    resolver: yupResolver(loginSchema),
+  });
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleShowPassword = () =>
     setShowPassword((prevState: boolean) => !prevState);
 
-  const handleLogin = (values: LoginProps) =>
+  const handleLogin = (values: LoginFormType) =>
     signIn(values.email, values.senha);
 
   return (
@@ -33,7 +29,13 @@ export default function Login() {
           <Typography align="center" variant="h5">
             TEACH ME!
           </Typography>
-          <InputCTL label="E-mail" {...{ control, name: "email" }} />
+          <InputCTL
+            label="E-mail"
+            type="email"
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            {...{ control, name: "email" }}
+          />
           <InputCTL
             label="Senha"
             type={showPassword ? "text" : "password"}
@@ -49,19 +51,12 @@ export default function Login() {
                 </InputAdornment>
               ),
             }}
+            error={!!errors.senha}
+            helperText={errors.senha?.message}
             {...{ control, name: "senha" }}
           />
           <Box display="flex" justifyContent="flex-end">
-            <Link
-              // variant="caption"
-              // color="textPrimary"
-              // underline="always"
-              // component="button"
-              // onClick={() => console.log("teste")}
-              to="/cadastrar"
-            >
-              Esqueceu a senha?
-            </Link>
+            <Link to="/cadastrar">Esqueceu a senha?</Link>
           </Box>
           <SignInButton
             variant="contained"

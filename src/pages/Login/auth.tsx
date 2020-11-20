@@ -1,11 +1,15 @@
-import React from "react";
-import { Box } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { Box, CircularProgress } from "@material-ui/core";
 import { useLocation } from "react-router-dom";
 import { auth } from "../../services/userServices";
-import { Container, LoginBox, SignInButton } from "./styles";
 
 export default function Auth() {
   const params = new URLSearchParams(useLocation().search);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    auth(String(params.get("cadastro")), setLoading);
+  }, [params]);
 
   return (
     <>
@@ -16,14 +20,11 @@ export default function Auth() {
         alignItems="center"
         height="100vh"
       >
-        <SignInButton
-          variant="contained"
-          color="primary"
-          onClick={() => auth(String(params.get("cadastro")))}
-          style={{ width: 200, height: 60, fontSize: 16 }}
-        >
-          Validar Cadastro
-        </SignInButton>
+        {loading ? (
+          <CircularProgress color="secondary" size={26} />
+        ) : (
+          "Cadastro validado com sucesso!"
+        )}
       </Box>
     </>
   );
