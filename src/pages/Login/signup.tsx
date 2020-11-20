@@ -144,7 +144,7 @@ export default function SignUp() {
             <Grid item xs={4}>
               <InputCTL
                 label="UF"
-                inputProps={{ maxlength: 2 }}
+                inputProps={{ maxLength: 2 }}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   String(e.target.value).toUpperCase()
                 }

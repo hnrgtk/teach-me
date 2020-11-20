@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Box, IconButton, InputAdornment, Typography } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { signIn } from "../../services/userServices";
 import { Container, LoginBox, SignInButton } from "./styles";
@@ -13,14 +13,22 @@ import { LoginFormType, loginSchema } from "./formType";
 export default function Login() {
   const { control, handleSubmit, errors } = useForm<LoginFormType>({
     resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "hnrtk@hotmail.com",
+      senha: "12345",
+    },
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const history = useHistory();
 
   const handleShowPassword = () =>
     setShowPassword((prevState: boolean) => !prevState);
 
-  const handleLogin = (values: LoginFormType) =>
-    signIn(values.email, values.senha);
+  async function handleLogin(values: LoginFormType) {
+    const response = await signIn(values.email, values.senha);
+    localStorage.setItem("loginToken", String(response?.data.token));
+    history.push("/home");
+  }
 
   return (
     <>

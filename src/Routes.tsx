@@ -1,19 +1,20 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-
-import Login from "./pages/Login";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { PrivateRoute } from "./components/PrivateRoute";
 import Home from "./pages/Home";
-import SignUp from "./pages/Login/signup";
+import Login from "./pages/Login";
 import Auth from "./pages/Login/auth";
+import SignUp from "./pages/Login/signup";
 
 export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Login} />
-        <Route path="/home" component={Home} />
+        <PrivateRoute path="/home" component={Home} />
         <Route path="/cadastrar" component={SignUp} />
         <Route path="/validarCadastro" component={Auth} />
+        <Route path="*" component={() => <h1>Page not found</h1>} />
       </Switch>
     </BrowserRouter>
   );

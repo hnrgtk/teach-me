@@ -1,17 +1,12 @@
 import api from "../config/api";
 
 export function signIn(email: string, senha: string) {
-  api
-    .get("v1/auth/login", {
-      headers: {
-        email: email,
-        senha: senha,
-      },
-    })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((err) => console.log(err));
+  return api.get("v1/auth/login", {
+    headers: {
+      email: email,
+      senha: senha,
+    },
+  });
 }
 
 export type SignUpVariables = {
