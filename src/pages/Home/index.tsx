@@ -1,5 +1,7 @@
 import React from "react";
 
 export default function Home() {
-  return <h2>asflaspfsa</h2>;
+  return (
+    <h2>Home Page</h2>
+  );
 }
