@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 
-import { ThemeContext } from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 
 export const MuiTheme = createMuiTheme({
   palette: {
@@ -45,3 +45,8 @@ declare module "styled-components" {
     notBroken: unknown;
   }
 }
+
+export const ContainerPage = styled.div`
+  padding: 28px 40px;
+  width: 100%;
+`;
