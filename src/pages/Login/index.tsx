@@ -18,17 +18,12 @@ export default function Login() {
       senha: "12345",
     },
   });
-  const [showPassword, setShowPassword] = useState<boolean>(false);
   const history = useHistory();
+
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleShowPassword = () =>
     setShowPassword((prevState: boolean) => !prevState);
-
-  async function handleLogin(values: LoginFormType) {
-    const response = await signIn(values.email, values.senha);
-    localStorage.setItem("loginToken", String(response?.data.token));
-    history.push("/home");
-  }
 
   return (
     <>
@@ -63,13 +58,13 @@ export default function Login() {
             helperText={errors.senha?.message}
             {...{ control, name: "senha" }}
           />
-          <Box display="flex" justifyContent="flex-end">
+          <Box display="flex" justifyContent="flex-end"> 
             <Link to="/cadastrar">Esqueceu a senha?</Link>
           </Box>
           <SignInButton
             variant="contained"
             color="primary"
-            onClick={handleSubmit(handleLogin)}
+            onClick={handleSubmit((data) => signIn(data, history))}
           >
             Entrar
           </SignInButton>

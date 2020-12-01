@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { MaskedInputCTL } from "../../components/InputTM/maskedInput";
 import { AutoCompleteCTL } from "../../components/SelectTM/AutoCompleteCTL";
-import { SignUpVariables, signUp } from "../../services/userServices";
+import { signUp } from "../../services/userServices";
 import { SignUpFormType, signUpSchema } from "./formType";
 import { Container, SignInButton, SignUpBox } from "./styles";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { SignUpVariables } from "../../services/servicesTypes";
 
 export default function SignUp() {
   const { control, handleSubmit, errors } = useForm<SignUpFormType>({
@@ -37,7 +38,6 @@ export default function SignUp() {
 
   function onSubmit(values: SignUpFormType) {
     setLoading(true);
-    console.log(values);
     const input = {
       nome: values.nome,
       email: values.email,

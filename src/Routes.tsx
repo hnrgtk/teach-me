@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Auth from "./pages/Login/auth";
 import SignUp from "./pages/Login/signup";
+import TeacherDetail from "./pages/Teacher/teacherDetail";
 import UserAccount from "./pages/UserAccount";
 
 export default function Routes() {
@@ -21,6 +22,11 @@ export default function Routes() {
             <Switch>
               <PrivateRoute path="/home" component={Home} />
               <PrivateRoute path="/minhaconta" component={UserAccount} />
+              <PrivateRoute
+                path="/professor/:id"
+                exact
+                component={TeacherDetail}
+              />
             </Switch>
           </main>
         </div>

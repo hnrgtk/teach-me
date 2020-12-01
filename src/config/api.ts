@@ -11,7 +11,7 @@ const api: AxiosInstance = axios.create({
 api.interceptors.request.use(async (config: any) => {
   const loginToken = getToken();
   if (loginToken) {
-    config.headers.Authorization = loginToken;
+    config.headers.Authorization = `Bearer ${loginToken}`;
   }
   return config;
 });

@@ -17,32 +17,33 @@ export type Teacher = {
     uf: string;
     cidade: string;
     token: string;
-  },
+  };
   modalidadeEnsino: TeachTemplate;
   escolaridaPubAlvo: Degree;
   disciplinas: Array<Discipline>;
   notaMedia: number;
   qtdAvaliacoes: number;
-}
+};
 
 export type TeacherApplicationForm = {
-  email: string,
-  senha: string,
-  usuarioId: 0,
-  disciplinas: Array<Discipline>,
-  modalidadeEnsinoId: string,
-  escolaridaPubAlvoId: string,
-  descricao: string,
-  valorHora: number
-}
+  email: string;
+  senha: string;
+  usuarioId: 0;
+  disciplinas: Array<Discipline>;
+  modalidadeEnsinoId: string;
+  escolaridaPubAlvoId: string;
+  descricao: string;
+  valorHora: number;
+};
 
 export function getTeachers(
-  id: number,
-  nome: string,
-  disciplina: string,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  id?: number,
+  nome?: string,
+  disciplina?: string
 ) {
-  api.get(`v1/professor?id=${id}&nome=${nome}&disciplina=${disciplina}`)
+  return api
+    .get(`v1/professor?id=${id}&nome=${nome}&disciplina=${disciplina}`)
     .then((res) => res.data as Array<Teacher>)
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));
@@ -52,7 +53,8 @@ export function becomeATeacher(
   applicationForm: TeacherApplicationForm,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  api.post('v1/professor/aplicarParaProfessor', { ...applicationForm })
+  api
+    .post("v1/professor/aplicarParaProfessor", { ...applicationForm })
     .then((res) => res.data as any)
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));

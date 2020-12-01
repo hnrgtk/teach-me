@@ -1,26 +1,21 @@
 import api from "../config/api";
+import { LoginFormType } from "../pages/Login/formType";
+import { SignUpVariables } from "./servicesTypes";
 
-export function signIn(email: string, senha: string) {
-  return api.get("v1/auth/login", {
-    headers: {
-      email: email,
-      senha: senha,
-    },
-  });
+export async function signIn(values: LoginFormType, history: any) {
+  api
+    .get("v1/auth/login", {
+      headers: {
+        email: values.email,
+        senha: values.senha,
+      },
+    })
+    .then((res) => {
+      localStorage.setItem("loginToken", String(res?.data.token));
+      history.push("/home");
+    })
+    .catch((err) => console.log(err));
 }
-
-export type SignUpVariables = {
-  nome: string;
-  dataNascimento: string;
-  email: string;
-  senha: string;
-  telefone: string;
-  escolaridadeId: string;
-  tipoDocumento: string;
-  nuDocumento: string;
-  uf: string;
-  cidade: string;
-};
 
 export function signUp(
   variables: SignUpVariables,
