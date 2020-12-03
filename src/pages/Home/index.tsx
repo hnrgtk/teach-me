@@ -1,17 +1,17 @@
 import React from "react";
-import { createStyles, Grid, makeStyles, Theme } from "@material-ui/core";
-import TeacherCard from "../../components/TeacherCard";
-import "styled-components/macro";
-import { ContainerPage } from "../../styles";
+import { createStyles, Grid, makeStyles } from "@material-ui/core";
 import useAxios from "axios-hooks";
+import "styled-components/macro";
+import TeacherCard from "../../components/TeacherCard";
 import { DisciplinaType, TeacherType } from "../../services/servicesTypes";
+import { ContainerPage } from "../../styles";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     grid: {
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, 275px)",
-      gridColumnGap: "20px",
+      gridTemplateColumns: "repeat(auto-fit, 420px)",
+      gridColumnGap: "14px",
       gridRowGap: "40px",
       width: "100%",
       marginTop: "28px",
@@ -32,7 +32,18 @@ export default function Home() {
       <Grid item xs={12} className={classes.grid}>
         {teachers &&
           teachers.map((teacher: any) => (
-            <TeacherCard key={teacher.id} teacher={teacher} />
+            <>
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+              <TeacherCard key={teacher.id} teacher={teacher} />
+            </>
           ))}
       </Grid>
     </ContainerPage>

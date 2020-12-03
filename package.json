@@ -15,6 +15,7 @@
     "@types/yup": "0.28.3",
     "axios": "^0.21.0",
     "axios-hooks": "^2.1.0",
+    "brazilian-values": "^0.10.1",
     "moment": "^2.29.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
