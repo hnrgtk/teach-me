@@ -10,7 +10,6 @@ export const InputCTL = ({
   name,
   onFocus: ignored,
   onChange = (e) => e.target.value,
-  rules,
   ...rest
 }: ControlledProps) => (
   <Controller
@@ -23,7 +22,6 @@ export const InputCTL = ({
         }}
       />
     )}
-    rules={rules}
     control={control}
     name={name ?? ""}
     defaultValue=""

@@ -16,10 +16,10 @@ export type UserType = {
   nome: string;
   dataNascimento: string;
   email: string;
-  senha: string;
+  // senha: string;
   telefone: string;
   escolaridade: Record<"descricao" | "id", string>;
-  tipoDocumento: string;
+  // tipoDocumento: string;
   nuDocumento: string;
   uf: string;
   cidade: string;

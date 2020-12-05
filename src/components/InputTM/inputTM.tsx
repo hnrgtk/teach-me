@@ -3,7 +3,7 @@ import { TextField, OutlinedTextFieldProps } from "@material-ui/core";
 
 type InputTMProps = Omit<OutlinedTextFieldProps, "variant">;
 
-export const InputTM = ({ ...rest }: InputTMProps) => (
+export const InputTM = ({ disabled, ...rest }: InputTMProps) => (
   <TextField
     variant="outlined"
     size="small"

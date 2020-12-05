@@ -12,6 +12,25 @@ import { Container, SignInButton, SignUpBox } from "./styles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpVariables } from "../../services/servicesTypes";
 
+export const scholarity = [
+  {
+    id: "251ea368-439a-044f-83d1-a13129ca1809",
+    descricao: "Ensino Fundamental",
+  },
+  { id: "9a4343ba-f0da-9a46-bbe8-9c6c98cee730", descricao: "Ensino Médio" },
+  {
+    id: "d32dc974-9d6a-3f4d-a7ed-cf6c9f3b886b",
+    descricao: "Cursando o Ensino Superior",
+  },
+  {
+    id: "86a80e90-6a15-a348-9d60-1259efcdc2d7",
+    descricao: "Ensino Superior Completo",
+  },
+  { id: "df3c3870-fb00-f04f-a3e9-71d2abe917f1", descricao: "Pós Graduação" },
+  { id: "ab740c2f-2bf6-6e42-9629-90e7777bdace", descricao: "Mestrado" },
+  { id: "463bad74-8c63-774e-b0f1-9eeea5edf3e2", descricao: "Doutorado" },
+
+];
 export default function SignUp() {
   const { control, handleSubmit, errors } = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),
@@ -30,11 +49,7 @@ export default function SignUp() {
       uf: "BA",
     },
   });
-  const [{ data }] = useAxios("/v1/escolaridade");
   const [loading, setLoading] = useState<boolean>(false);
-  const rules = {
-    required: true,
-  };
 
   function onSubmit(values: SignUpFormType) {
     setLoading(true);
@@ -85,7 +100,6 @@ export default function SignUp() {
             label="Data de Nascimento"
             format="##/##/####"
             mask="_"
-            rules={rules}
             error={!!errors.dataNascimento}
             helperText={errors.dataNascimento?.message}
             {...{ control, name: "dataNascimento" }}
@@ -94,7 +108,6 @@ export default function SignUp() {
             label="Telefone"
             format="(##)#####-####"
             mask="_"
-            rules={rules}
             error={!!errors.telefone}
             helperText={errors.telefone?.message}
             {...{ control, name: "telefone" }}
@@ -105,7 +118,6 @@ export default function SignUp() {
               { label: "CPF", id: "CPF" },
               { label: "RG", id: "RG" },
             ]}
-            rules={rules}
             error={!!errors.tipoDocumento}
             helperText={(errors.tipoDocumento as any)?.message}
             {...{ control, name: "tipoDocumento" }}
@@ -113,7 +125,6 @@ export default function SignUp() {
           <InputCTL
             label="N° do Documento"
             mask="_"
-            rules={rules}
             error={!!errors.nuDocumento}
             helperText={errors.nuDocumento?.message}
             {...{ control, name: "nuDocumento" }}
@@ -121,12 +132,11 @@ export default function SignUp() {
           <AutoCompleteCTL
             label="Nível de Escolaridade"
             options={
-              data?.map((d: any) => ({
+              scholarity?.map((d: any) => ({
                 id: d.id,
                 label: d.descricao,
               })) ?? []
             }
-            rules={rules}
             error={!!errors.escolaridade}
             helperText={(errors.escolaridade as any)?.message}
             {...{ control, name: "escolaridade" }}
@@ -135,7 +145,6 @@ export default function SignUp() {
             <Grid item xs={8}>
               <InputCTL
                 label="Cidade"
-                rules={rules}
                 error={!!errors.cidade}
                 helperText={errors.cidade?.message}
                 {...{ control, name: "cidade" }}
@@ -148,7 +157,6 @@ export default function SignUp() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   String(e.target.value).toUpperCase()
                 }
-                rules={rules}
                 error={!!errors.uf}
                 helperText={errors.uf?.message}
                 {...{ control, name: "uf" }}

@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { isUserLogged } from "../../utils/login";
+import { useLogin } from "../../utils/login";
 
 type Props = {
   component: React.ComponentType<any>;
@@ -15,6 +15,8 @@ export function PrivateRoute({
   path,
   ...rest
 }: Props) {
+  const { isUserLogged } = useLogin();
+
   const isLogged = isUserLogged();
   return (
     <Route

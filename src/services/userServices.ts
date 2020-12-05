@@ -12,6 +12,7 @@ export async function signIn(values: LoginFormType, history: any) {
     })
     .then((res) => {
       localStorage.setItem("loginToken", String(res?.data.token));
+      localStorage.setItem("userId", String(res?.data.id));
       history.push("/home");
     })
     .catch((err) => console.log(err));
@@ -39,4 +40,12 @@ export function auth(
     .then((res) => console.log(res))
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));
+}
+
+export function getUserById(id: string) {
+  return api
+    .get(`/v1/usuario/porId?id=${id}`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
+  // .finally(() => setLoading(false));
 }
