@@ -49,6 +49,13 @@ export function getTeachers(
     .finally(() => setLoading(false));
 }
 
+export function getTeacherById(id: string) {
+  return api
+    .get(`v1/professor?id=${id}`)
+    .then((res) => res?.data)
+    .catch((err) => console.log(err));
+}
+
 export function becomeATeacher(
   applicationForm: TeacherApplicationForm,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>

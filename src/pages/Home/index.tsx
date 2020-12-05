@@ -24,6 +24,8 @@ const useStyles = makeStyles(() =>
 export default function Home() {
   const classes = useStyles();
   const [{ data: subjects }] = useAxios<DisciplinaType[]>("v1/disciplina");
+
+  
   const [{ data: teachers }] = useAxios<TeacherType[]>("v1/professor");
 
   return (
