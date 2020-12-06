@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 import moment from "moment";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { ButtonTM } from "../../components/ButtonTM";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { MaskedInputCTL } from "../../components/InputTM/maskedInput";
@@ -28,9 +29,11 @@ const useStyles = makeStyles(() =>
     dialog: {
       display: "flex",
       justifyContent: "center",
+      padding: 12,
     },
     input: {
       width: "100%",
+      marginTop: 6,
     },
   })
 );
@@ -41,6 +44,7 @@ export default function HireTeacherDialog({
   onClose,
 }: Props) {
   const classes = useStyles();
+  const { push } = useHistory();
   const { control, errors, handleSubmit } = formHandlers;
   const [status, setStatus] = useState<Record<string, string | string>>();
 
@@ -65,6 +69,9 @@ export default function HireTeacherDialog({
             color: "#ff0000",
           }
     );
+    statusText && setTimeout(() => push("/home"), [1000]);
+
+    setStatus({ text: "", color: "" });
   }
 
   return (
@@ -74,6 +81,17 @@ export default function HireTeacherDialog({
       </DialogTitle>
       <DialogContent className={classes.dialog}>
         <Grid container item xs={12} spacing={2}>
+          <Grid item xs={12}>
+            <InputCTL
+              label="Valor Hora"
+              type="number"
+              disabled={true}
+              className={classes.input}
+              error={!!errors.valorHora?.message}
+              helperText={errors.valorHora?.message}
+              {...{ control, name: "valorHora" }}
+            />
+          </Grid>
           <Grid item xs={12}>
             <MaskedInputCTL
               label="Data Início"
@@ -85,30 +103,21 @@ export default function HireTeacherDialog({
               {...{ control, name: "dataInicioPrestacao" }}
             />
           </Grid>
-          <Grid item xs={6}>
-            <MaskedInputCTL
-              label="Valor Hora"
-              format="##"
-              mask="_"
-              error={!!errors.valorHora?.message}
-              helperText={errors.valorHora?.message}
-              {...{ control, name: "valorHora" }}
-            />
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <InputCTL
               label="Horas Contratadas"
+              className={classes.input}
+              type="number"
               error={!!errors.horasContratadas?.message}
               helperText={errors.horasContratadas?.message}
               {...{ control, name: "horasContratadas" }}
             />
           </Grid>
+
           <Grid item xs={6} style={{ display: "none" }}>
             {["professorId", "alunoId"].map((name) => (
               <InputCTL
-                label="ProfessorID"
-                format="##"
-                mask="_"
+                label=""
                 {...{ control, name }}
               />
             ))}

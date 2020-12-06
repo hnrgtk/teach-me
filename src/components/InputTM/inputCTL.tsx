@@ -10,6 +10,7 @@ export const InputCTL = ({
   name,
   onFocus: ignored,
   onChange = (e) => e.target.value,
+  disabled,
   ...rest
 }: ControlledProps) => (
   <Controller
@@ -20,6 +21,7 @@ export const InputCTL = ({
         onChange={(e) => {
           props.onChange(onChange(e));
         }}
+        disabled={disabled}
       />
     )}
     control={control}

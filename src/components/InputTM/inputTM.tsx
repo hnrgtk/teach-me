@@ -9,6 +9,7 @@ export const InputTM = ({ disabled, ...rest }: InputTMProps) => (
     size="small"
     color="primary"
     margin="normal"
+    disabled={disabled}
     {...rest}
   />
 );

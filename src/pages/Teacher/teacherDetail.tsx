@@ -117,6 +117,9 @@ export default function TeacherDetail() {
               Público Alvo: {teacher?.escolaridaPubAlvo.descricao}
             </Typography>
             <Typography variant="h5" className={classes.typography}>
+              Nota Média: {teacher?.notaMedia}
+            </Typography>
+            <Typography variant="h5" className={classes.typography}>
               Valor Hora: {formatToBRL(String(teacher?.valorHora))}
             </Typography>
           </Grid>

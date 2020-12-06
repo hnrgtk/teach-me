@@ -1,14 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { makeStyles, createStyles, Typography, Grid } from "@material-ui/core";
 import moment from "moment";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { ButtonTM } from "../../components/ButtonTM";
+import { TeacherApplicationForm } from "../../services/teacherService";
 import { getUserById } from "../../services/userServices";
 import { ContainerPage } from "../../styles";
 import { useLogin } from "../../utils/login";
 import { SignUpFormType, signUpSchema } from "../Login/formType";
+import BecomeATeacherDialog from "./becomeATeacherDialog";
 import UserForm from "./form";
+import { BecomeATeacherFormType, becomeATeacherSchema } from "./formType";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -30,12 +33,19 @@ export default function UserAccount() {
   const classes = useStyles();
   const { getUserId } = useLogin();
   const id = getUserId();
+  const [open, setOpen] = useState<boolean>(false);
 
   const formHandlers = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),
   });
+  const formTeacher = useForm<BecomeATeacherFormType>({
+    resolver: yupResolver(becomeATeacherSchema),
+  });
 
-  const { reset } = formHandlers;
+  const { reset, handleSubmit } = formHandlers;
+  const { reset: resetTeacher } = formTeacher;
+
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     async function getUserData() {
@@ -48,20 +58,31 @@ export default function UserAccount() {
         },
         dataNascimento: moment(userData.dataNascimento).format("DD/MM/YYYY"),
       });
+      resetTeacher({
+        usuarioId: Number(id),
+      });
     }
     getUserData();
   }, []);
+
   return (
-    <ContainerPage className={classes.container}>
-      <Typography align="center" variant="h5">
-        Seus Dados
-      </Typography>
-      <UserForm formHandlers={formHandlers} />
-      <Grid container item xs={12} justify="center" className={classes.grid}>
-        <ButtonTM width="140px" height="40px">
-          Tornar Professor
-        </ButtonTM>
-      </Grid>
-    </ContainerPage>
+    <>
+      <BecomeATeacherDialog
+        formHandlers={formTeacher}
+        open={open}
+        onClose={handleClose}
+      />
+      <ContainerPage className={classes.container}>
+        <Typography align="center" variant="h5">
+          Seus Dados
+        </Typography>
+        <UserForm formHandlers={formHandlers} disableInputs />
+        <Grid container item xs={12} justify="center" className={classes.grid}>
+          <ButtonTM width="140px" height="40px" onClick={() => setOpen(true)}>
+            Tornar Professor
+          </ButtonTM>
+        </Grid>
+      </ContainerPage>
+    </>
   );
 }

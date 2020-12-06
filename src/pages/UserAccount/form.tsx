@@ -8,6 +8,7 @@ import { scholarity } from "../Login/signup";
 
 type Props = {
   formHandlers: any;
+  disableInputs: boolean;
 };
 
 const useStyles = makeStyles(() =>
@@ -18,7 +19,10 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function UserForm({ formHandlers }: Props) {
+export default function UserForm({
+  formHandlers,
+  disableInputs = false,
+}: Props) {
   const classes = useStyles();
   const { errors, control } = formHandlers;
 
@@ -30,6 +34,7 @@ export default function UserForm({ formHandlers }: Props) {
             label="Nome Completo"
             className={classes.input}
             error={!!errors.nome?.message}
+            disabled={disableInputs}
             helperText={errors.nome?.message}
             {...{ control, name: "nome" }}
           />
@@ -39,25 +44,18 @@ export default function UserForm({ formHandlers }: Props) {
             label="E-mail"
             type="email"
             className={classes.input}
+            disabled={disableInputs}
             error={!!errors.email?.message}
             helperText={errors.email?.message}
             {...{ control, name: "email" }}
           />
         </Grid>
-        {/* <Grid item xs={6}>
-          <InputCTL
-            label="Senha"
-            error={!!errors.senha}
-            className={classes.input}
-            helperText={errors.senha?.message}
-            {...{ control, name: "senha" }}
-          />
-        </Grid> */}
         <Grid item xs={6}>
           <MaskedInputCTL
             label="Telefone"
             format="(##)#####-####"
             mask="_"
+            disabled={disableInputs}
             className={classes.input}
             error={!!errors.telefone}
             helperText={errors.telefone?.message}
@@ -70,33 +68,12 @@ export default function UserForm({ formHandlers }: Props) {
             format="##/##/####"
             className={classes.input}
             mask="_"
+            disabled={disableInputs}
             error={!!errors.dataNascimento}
             helperText={errors.dataNascimento?.message}
             {...{ control, name: "dataNascimento" }}
           />
         </Grid>
-        {/* <Grid item xs={6}>
-          <AutoCompleteCTL
-            label="Tipo de Documento"
-            options={[
-              { label: "CPF", id: "CPF" },
-              { label: "RG", id: "RG" },
-            ]}
-            error={!!errors.tipoDocumento}
-            helperText={(errors.tipoDocumento as any)?.message}
-            {...{ control, name: "tipoDocumento" }}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <InputCTL
-            label="N° do Documento"
-            mask="_"
-            className={classes.input}
-            error={!!errors.nuDocumento}
-            helperText={errors.nuDocumento?.message}
-            {...{ control, name: "nuDocumento" }}
-          />
-        </Grid> */}
         <Grid item xs={6}>
           <AutoCompleteCTL
             label="Nível de Escolaridade"
@@ -106,6 +83,7 @@ export default function UserForm({ formHandlers }: Props) {
                 label: d.descricao,
               })) ?? []
             }
+            disabled={disableInputs}
             error={!!errors.escolaridade}
             helperText={(errors.escolaridade as any)?.message}
             {...{ control, name: "escolaridade" }}
@@ -117,6 +95,7 @@ export default function UserForm({ formHandlers }: Props) {
               label="Cidade"
               className={classes.input}
               error={!!errors.cidade}
+              disabled={disableInputs}
               helperText={errors.cidade?.message}
               {...{ control, name: "cidade" }}
             />
@@ -130,6 +109,7 @@ export default function UserForm({ formHandlers }: Props) {
                 String(e.target.value).toUpperCase()
               }
               error={!!errors.uf}
+              disabled={disableInputs}
               helperText={errors.uf?.message}
               {...{ control, name: "uf" }}
             />

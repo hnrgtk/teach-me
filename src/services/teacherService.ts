@@ -29,7 +29,7 @@ export type Teacher = {
 export type TeacherApplicationForm = {
   email: string;
   senha: string;
-  usuarioId: 0;
+  usuarioId: number;
   disciplinas: Array<Discipline>;
   modalidadeEnsinoId: string;
   escolaridaPubAlvoId: string;
@@ -57,15 +57,11 @@ export function getTeacherById(id: string) {
     .catch((err) => console.log(err));
 }
 
-export function becomeATeacher(
-  applicationForm: TeacherApplicationForm,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-) {
-  api
+export function becomeATeacher(applicationForm: TeacherApplicationForm) {
+  return api
     .post("v1/professor/aplicarParaProfessor", { ...applicationForm })
-    .then((res) => res.data as any)
-    .catch((err) => console.log(err))
-    .finally(() => setLoading(false));
+    .then((res) => res.statusText as any)
+    .catch((err) => console.log(err));
 }
 
 export function hireTeacher(input: HireFormType) {

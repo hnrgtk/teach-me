@@ -15,6 +15,7 @@ type Props = {
   control: Control;
   error?: boolean;
   helperText?: any;
+  disabled?: boolean;
 };
 
 export function AutoCompleteCTL({
@@ -24,6 +25,7 @@ export function AutoCompleteCTL({
   control,
   error,
   helperText,
+  disabled = false,
 }: Props) {
   return (
     <Controller
@@ -33,6 +35,7 @@ export function AutoCompleteCTL({
             options={options}
             getOptionLabel={(option) => option.label ?? ""}
             renderOption={(option) => option.label}
+            disabled={disabled}
             renderInput={(params) => (
               <InputTM
                 {...params}

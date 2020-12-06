@@ -4,22 +4,21 @@ export type Discipline = {
   id: string;
   descricao: string;
   ativo: boolean;
-}
+};
 
-export function getDisciplines(
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-) {
-  api.get('v1/disciplina')
+export function getDisciplines() {
+  return api
+    .get("v1/disciplina")
     .then((res) => res.data as Array<Discipline>)
-    .catch((err) => console.log(err))
-    .finally(() => setLoading(false));
+    .catch((err) => console.log(err));
 }
 
 export function getDisciplineById(
   id: string,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) {
-  api.get(`v1/disciplina/porId?Id=${id}`)
+  api
+    .get(`v1/disciplina/porId?Id=${id}`)
     .then((res) => res.data as Discipline)
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));
