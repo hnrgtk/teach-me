@@ -2,6 +2,7 @@ import api from "../config/api";
 import { Discipline } from "./disciplineService";
 import { Degree } from "./degreeService";
 import { TeachTemplate } from "./teachTemplateService";
+import { HireFormType } from "../pages/Teacher/formType";
 
 export type Teacher = {
   id: number;
@@ -65,4 +66,11 @@ export function becomeATeacher(
     .then((res) => res.data as any)
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));
+}
+
+export function hireTeacher(input: HireFormType) {
+  return api
+    .post(`v1/aula/contratarAula`, { ...input })
+    .then((res) => res?.statusText)
+    .catch((err) => console.log(err));
 }

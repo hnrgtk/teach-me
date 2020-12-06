@@ -15,12 +15,6 @@ const useStyles = makeStyles(() =>
     input: {
       width: "100%",
     },
-    container: {
-      width: "100%",
-      padding: "80px",
-      display: "flex",
-      justifyContent: "center",
-    },
   })
 );
 
@@ -29,7 +23,7 @@ export default function UserForm({ formHandlers }: Props) {
   const { errors, control } = formHandlers;
 
   return (
-    <ContainerPage className={classes.container}>
+    <>
       <Grid container xs={8} spacing={2} justify="center">
         <Grid item xs={6}>
           <InputCTL
@@ -50,7 +44,7 @@ export default function UserForm({ formHandlers }: Props) {
             {...{ control, name: "email" }}
           />
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <InputCTL
             label="Senha"
             error={!!errors.senha}
@@ -58,7 +52,7 @@ export default function UserForm({ formHandlers }: Props) {
             helperText={errors.senha?.message}
             {...{ control, name: "senha" }}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={6}>
           <MaskedInputCTL
             label="Telefone"
@@ -70,7 +64,7 @@ export default function UserForm({ formHandlers }: Props) {
             {...{ control, name: "telefone" }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <MaskedInputCTL
             label="Data de Nascimento"
             format="##/##/####"
@@ -81,7 +75,7 @@ export default function UserForm({ formHandlers }: Props) {
             {...{ control, name: "dataNascimento" }}
           />
         </Grid>
-        <Grid item xs={4}>
+        {/* <Grid item xs={6}>
           <AutoCompleteCTL
             label="Tipo de Documento"
             options={[
@@ -93,7 +87,7 @@ export default function UserForm({ formHandlers }: Props) {
             {...{ control, name: "tipoDocumento" }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <InputCTL
             label="N° do Documento"
             mask="_"
@@ -102,7 +96,7 @@ export default function UserForm({ formHandlers }: Props) {
             helperText={errors.nuDocumento?.message}
             {...{ control, name: "nuDocumento" }}
           />
-        </Grid>
+        </Grid> */}
         <Grid item xs={6}>
           <AutoCompleteCTL
             label="Nível de Escolaridade"
@@ -142,6 +136,6 @@ export default function UserForm({ formHandlers }: Props) {
           </Grid>
         </Grid>
       </Grid>
-    </ContainerPage>
+    </>
   );
 }

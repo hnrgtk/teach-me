@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { createStyles, Grid, makeStyles, Typography } from "@material-ui/core";
 import { formatToBRL } from "brazilian-values";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { ButtonTM } from "../../components/ButtonTM";
 import { TeacherType } from "../../services/servicesTypes";
 import { getTeacherById } from "../../services/teacherService";
 import { ContainerPage } from "../../styles";
+import { useLogin } from "../../utils/login";
+import { HireFormType, hireTeacherSchema } from "./formType";
 import HireTeacherDialog from "./hireTeacherDialog";
-import { useForm } from "react-hook-form";
-import { HireFormType } from "./formType";
-import moment from "moment";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -27,9 +28,12 @@ const useStyles = makeStyles(() =>
 export default function TeacherDetail() {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
+  const { getUserId } = useLogin();
   const [teacher, setTeacher] = useState<TeacherType>();
   const [open, setOpen] = useState<boolean>(false);
-  const formHandlers = useForm<HireFormType>();
+  const formHandlers = useForm<HireFormType>({
+    resolver: yupResolver(hireTeacherSchema),
+  });
 
   const { reset } = formHandlers;
 
@@ -45,10 +49,11 @@ export default function TeacherDetail() {
 
   useEffect(() => {
     reset({
-      dataContrato: moment(new Date()).format("DD/MM/YYYY"),
       valorHora: teacher?.valorHora ? teacher.valorHora : 0,
+      professorId: Number(id),
+      alunoId: Number(getUserId()),
     });
-  }, [teacher]);
+  }, [teacher, id]);
 
   return (
     <>

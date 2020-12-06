@@ -25,7 +25,6 @@ export default function Home() {
   const classes = useStyles();
   const [{ data: subjects }] = useAxios<DisciplinaType[]>("v1/disciplina");
 
-  
   const [{ data: teachers }] = useAxios<TeacherType[]>("v1/professor");
 
   return (
@@ -34,18 +33,7 @@ export default function Home() {
       <Grid item xs={12} className={classes.grid}>
         {teachers &&
           teachers.map((teacher: any) => (
-            <>
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-              <TeacherCard key={teacher.id} teacher={teacher} />
-            </>
+            <TeacherCard key={teacher.id} teacher={teacher} />
           ))}
       </Grid>
     </ContainerPage>
