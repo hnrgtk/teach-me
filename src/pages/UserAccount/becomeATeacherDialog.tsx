@@ -4,6 +4,7 @@ import {
   DialogContent,
   Grid,
   makeStyles,
+  CircularProgress
 } from "@material-ui/core";
 import useAxios from "axios-hooks";
 import React, { useState } from "react";
@@ -55,8 +56,10 @@ export default function BecomeATeacherDialog({
   const [{ data: disciplines }] = useAxios("/v1/disciplina");
   const [{ data: teachingType }] = useAxios("/v1/modalidadeEnsino");
   const [{ data: scholarity }] = useAxios("/v1/escolaridade");
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function onSubmit(values: BecomeATeacherFormType) {
+    setLoading(true);
     const input = {
       ...values,
       disciplinas: [
@@ -70,7 +73,7 @@ export default function BecomeATeacherDialog({
       escolaridaPubAlvoId: values.escolaridaPubAlvoId.id,
     } as TeacherApplicationForm;
 
-    const statusText = await becomeATeacher(input);
+    const statusText = await becomeATeacher(input, setLoading);
     setStatus(
       statusText
         ? {
@@ -195,7 +198,11 @@ export default function BecomeATeacherDialog({
               height="40px"
               onClick={handleSubmit(onSubmit)}
             >
-              Cadastrar
+              {loading ? (
+                <CircularProgress color="secondary" size={26} />
+              ) : (
+                "Cadastrar"
+              )}
             </ButtonTM>
             {status && (
               <div style={{ marginTop: 12, color: status.color }}>

@@ -4,6 +4,7 @@ import {
   DialogContent,
   Grid,
   makeStyles,
+  CircularProgress
 } from "@material-ui/core";
 import moment from "moment";
 import React, { useState } from "react";
@@ -47,8 +48,10 @@ export default function HireTeacherDialog({
   const { push } = useHistory();
   const { control, errors, handleSubmit } = formHandlers;
   const [status, setStatus] = useState<Record<string, string | string>>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   async function onSubmit(values: HireFormType) {
+    setLoading(true);
     const input = {
       ...values,
       dataInicioPrestacao: moment(
@@ -57,7 +60,7 @@ export default function HireTeacherDialog({
       ).toISOString(),
     };
 
-    const statusText = await hireTeacher(input);
+    const statusText = await hireTeacher(input, setLoading);
     setStatus(
       statusText
         ? {
@@ -116,10 +119,7 @@ export default function HireTeacherDialog({
 
           <Grid item xs={6} style={{ display: "none" }}>
             {["professorId", "alunoId"].map((name) => (
-              <InputCTL
-                label=""
-                {...{ control, name }}
-              />
+              <InputCTL label="" {...{ control, name }} />
             ))}
           </Grid>
           <Grid
@@ -135,7 +135,11 @@ export default function HireTeacherDialog({
               height="40px"
               onClick={handleSubmit(onSubmit)}
             >
-              Contratar
+              {loading ? (
+                <CircularProgress color="secondary" size={26} />
+              ) : (
+                "Contratar"
+              )}
             </ButtonTM>
             {status && (
               <div style={{ marginTop: 12, color: status.color }}>

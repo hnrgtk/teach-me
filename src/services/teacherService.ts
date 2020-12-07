@@ -58,18 +58,23 @@ export function getTeacherById(id: string) {
     .catch((err) => console.log(err));
 }
 
-export function becomeATeacher(applicationForm: TeacherApplicationForm) {
+export function becomeATeacher(
+  applicationForm: TeacherApplicationForm,
+  setLoading: any
+) {
   return api
     .post("v1/professor/aplicarParaProfessor", { ...applicationForm })
     .then((res) => res.statusText as any)
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => setLoading(false));
 }
 
-export function hireTeacher(input: HireFormType) {
+export function hireTeacher(input: HireFormType, setLoading: any) {
   return api
     .post(`v1/aula/contratarAula`, { ...input })
     .then((res) => res?.statusText)
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => setLoading(false));
 }
 
 export function rateTeacher(input: any) {
