@@ -1,7 +1,7 @@
 import { CircularProgress, Grid, Typography } from "@material-ui/core";
 import useAxios from "axios-hooks";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { MaskedInputCTL } from "../../components/InputTM/maskedInput";
@@ -11,28 +11,14 @@ import { SignUpFormType, signUpSchema } from "./formType";
 import { Container, SignInButton, SignUpBox } from "./styles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpVariables } from "../../services/servicesTypes";
-import { scholarity } from "../../utils/autoCompleteValues";
 
 export default function SignUp() {
-  const { control, handleSubmit, errors } = useForm<SignUpFormType>({
-    resolver: yupResolver(signUpSchema),
-    defaultValues: {
-      nome: "Henry Gabriel",
-      email: "hnrtk@hotmail.com",
-      senha: "12345",
-      dataNascimento: "14/10/1999",
-      telefone: "71986220625",
-      tipoDocumento: {
-        id: "CPF",
-        label: "CPF",
-      },
-      nuDocumento: "04524882570",
-      cidade: "Dias davila",
-      uf: "BA",
-    },
-  });
+  const [{ data: scholarity }] = useAxios("/v1/escolaridade");
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { control, handleSubmit, errors } = useForm<SignUpFormType>({
+    resolver: yupResolver(signUpSchema),
+  });
   function onSubmit(values: SignUpFormType) {
     setLoading(true);
     const input = {

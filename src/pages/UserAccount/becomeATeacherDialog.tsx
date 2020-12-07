@@ -5,6 +5,7 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
+import useAxios from "axios-hooks";
 import React, { useState } from "react";
 import { UseFormMethods } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -15,11 +16,7 @@ import {
   becomeATeacher,
   TeacherApplicationForm,
 } from "../../services/teacherService";
-import {
-  disciplines,
-  scholarity,
-  teachingType,
-} from "../../utils/autoCompleteValues";
+
 import { DialogTitle } from "../Teacher/styles";
 import { BecomeATeacherFormType } from "./formType";
 
@@ -55,6 +52,9 @@ export default function BecomeATeacherDialog({
   const { push } = useHistory();
   const { control, errors, handleSubmit } = formHandlers;
   const [status, setStatus] = useState<Record<string, string | string>>();
+  const [{ data: disciplines }] = useAxios("/v1/disciplina");
+  const [{ data: teachingType }] = useAxios("/v1/modalidadeEnsino");
+  const [{ data: scholarity }] = useAxios("/v1/escolaridade");
 
   async function onSubmit(values: BecomeATeacherFormType) {
     const input = {
@@ -83,11 +83,10 @@ export default function BecomeATeacherDialog({
           }
     );
 
-    console.log(status);
     localStorage.setItem("userCharge", "professor");
-    // statusText && setTimeout(() => push("/home"), [1000]);
+    statusText && setTimeout(() => push("/home"), [1000]);
 
-    // setStatus({ text: "", color: "" });
+    setStatus({ text: "", color: "" });
   }
   return (
     <Dialog open={open} fullWidth maxWidth="xs">
@@ -130,7 +129,7 @@ export default function BecomeATeacherDialog({
             <AutoCompleteCTL
               label="Disciplina"
               options={
-                disciplines.map((d: any) => ({
+                disciplines?.map((d: any) => ({
                   id: d.id,
                   label: d.descricao,
                 })) ?? []
@@ -144,7 +143,7 @@ export default function BecomeATeacherDialog({
             <AutoCompleteCTL
               label="Modalidade de Ensino"
               options={
-                teachingType.map((d: any) => ({
+                teachingType?.map((d: any) => ({
                   id: d.id,
                   label: d.descricao,
                 })) ?? []
@@ -158,7 +157,7 @@ export default function BecomeATeacherDialog({
             <AutoCompleteCTL
               label="Público Alvo"
               options={
-                scholarity.map((d: any) => ({
+                scholarity?.map((d: any) => ({
                   id: d.id,
                   label: d.descricao,
                 })) ?? []

@@ -1,10 +1,10 @@
 import { createStyles, Grid, makeStyles } from "@material-ui/core";
+import useAxios from "axios-hooks";
 import React from "react";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { MaskedInputCTL } from "../../components/InputTM/maskedInput";
 import { AutoCompleteCTL } from "../../components/SelectTM/AutoCompleteCTL";
 import { ContainerPage } from "../../styles";
-import { scholarity } from "../../utils/autoCompleteValues";
 
 type Props = {
   formHandlers: any;
@@ -25,6 +25,7 @@ export default function UserForm({
 }: Props) {
   const classes = useStyles();
   const { errors, control } = formHandlers;
+  const [{ data: scholarity }] = useAxios("/v1/escolaridade");
 
   return (
     <>
@@ -78,7 +79,7 @@ export default function UserForm({
           <AutoCompleteCTL
             label="Nível de Escolaridade"
             options={
-              scholarity.map((d: any) => ({
+              scholarity?.map((d: any) => ({
                 id: d.id,
                 label: d.descricao,
               })) ?? []

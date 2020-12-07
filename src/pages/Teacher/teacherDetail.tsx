@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createStyles, Grid, makeStyles, Typography } from "@material-ui/core";
+import useAxios from "axios-hooks";
 import { formatToBRL } from "brazilian-values";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,7 @@ import { TeacherType } from "../../services/servicesTypes";
 import { getTeacherById } from "../../services/teacherService";
 import { ContainerPage } from "../../styles";
 import { useLogin } from "../../utils/login";
+import FeedbackCard from "./feedbackCard";
 import { HireFormType, hireTeacherSchema } from "./formType";
 import HireTeacherDialog from "./hireTeacherDialog";
 
@@ -31,6 +33,9 @@ export default function TeacherDetail() {
   const { getUserId } = useLogin();
   const [teacher, setTeacher] = useState<TeacherType>();
   const [open, setOpen] = useState<boolean>(false);
+  const [{ data: feedbacks }] = useAxios(
+    `/v1/professor/avaliacaoPorProfessor?professorId=${Number(id)}`
+  );
   const formHandlers = useForm<HireFormType>({
     resolver: yupResolver(hireTeacherSchema),
   });
@@ -56,13 +61,13 @@ export default function TeacherDetail() {
   }, [teacher, id]);
 
   return (
-    <>
+    <div>
       <HireTeacherDialog
         formHandlers={formHandlers}
         open={open}
         onClose={handleClose}
       />
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", overflow: "hidden", height: "93vh" }}>
         <div
           style={{
             display: "flex",
@@ -70,7 +75,7 @@ export default function TeacherDetail() {
             alignItems: "center",
             justifyContent: "space-between",
             width: "400px",
-            height: "93vh",
+            height: "100%",
             backgroundColor: "#f7f8f1",
           }}
         >
@@ -95,7 +100,9 @@ export default function TeacherDetail() {
             </ButtonTM>
           </div>
         </div>
-        <ContainerPage style={{ marginLeft: 30, marginTop: 30 }}>
+        <ContainerPage
+          style={{ marginLeft: 30, marginTop: 30, overflow: "auto" }}
+        >
           <Grid
             container
             item
@@ -110,8 +117,7 @@ export default function TeacherDetail() {
               Modalidade de Ensino: {teacher?.modalidadeEnsino.descricao}
             </Typography>
             <Typography className={classes.typography} variant="h5">
-              Disciplinas:{" "}
-              {teacher?.disciplinas.map((d: any) => d.descricao).join(", ")}
+              Disciplina: {teacher?.disciplinas.map((d: any) => d.descricao)}
             </Typography>
             <Typography className={classes.typography} variant="h5">
               Público Alvo: {teacher?.escolaridaPubAlvo.descricao}
@@ -123,7 +129,6 @@ export default function TeacherDetail() {
               Valor Hora: {formatToBRL(String(teacher?.valorHora))}
             </Typography>
           </Grid>
-
           <Grid
             item
             container
@@ -147,8 +152,16 @@ export default function TeacherDetail() {
               Telefone: {teacher?.usuario.telefone}
             </Typography>
           </Grid>
+          <Typography className={classes.typographyTitle} variant="h4">
+            Avaliações:
+          </Typography>
+          {feedbacks
+            ? feedbacks.map((f: any) => (
+                <FeedbackCard key={f.id} feedback={f} />
+              ))
+            : "Sem Avaliações"}
         </ContainerPage>
       </div>
-    </>
+    </div>
   );
 }

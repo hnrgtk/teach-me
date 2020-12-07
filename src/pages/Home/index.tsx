@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { createStyles, debounce, Grid, makeStyles } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import useAxios from "axios-hooks";
-import "styled-components/macro";
-import TeacherCard from "../../components/TeacherCard";
-import { DisciplinaType, TeacherType } from "../../services/servicesTypes";
-import { ContainerPage } from "../../styles";
-import { InputCTL } from "../../components/InputTM/inputCTL";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useStyles } from "./styles";
-import { getTeachers, searchTeachers } from "../../services/teacherService";
-import { AutoCompleteCTL } from "../../components/SelectTM/AutoCompleteCTL";
-import { disciplines } from "../../utils/autoCompleteValues";
+import "styled-components/macro";
 import { ButtonTM } from "../../components/ButtonTM";
+import { InputCTL } from "../../components/InputTM/inputCTL";
+import { AutoCompleteCTL } from "../../components/SelectTM/AutoCompleteCTL";
+import TeacherCard from "../../components/TeacherCard";
+import { TeacherType } from "../../services/servicesTypes";
+import { getTeachers, searchTeachers } from "../../services/teacherService";
+import { ContainerPage } from "../../styles";
+import { useStyles } from "./styles";
 
 type SearchType = {
   nome: string;
@@ -25,6 +24,7 @@ export default function Home() {
   const classes = useStyles();
   const { control, getValues, handleSubmit } = useForm<SearchType>();
   const [teachers, setTeachers] = useState<TeacherType[]>();
+  const [{ data: disciplines }] = useAxios("/v1/disciplina");
 
   useEffect(() => {
     async function getAllTeachers() {
@@ -64,7 +64,7 @@ export default function Home() {
           <AutoCompleteCTL
             label="Filtrar por Disciplina"
             options={
-              disciplines.map((d: any) => ({
+              disciplines?.map((d: any) => ({
                 id: d.id,
                 label: d.descricao,
               })) ?? []
@@ -95,7 +95,9 @@ export default function Home() {
       <Grid item xs={12} className={classes.grid}>
         {teachers &&
           teachers.map((teacher: any) => (
-            <TeacherCard key={teacher.id} teacher={teacher} />
+            <React.Fragment key={teacher.id}>
+              <TeacherCard teacher={teacher} />
+            </React.Fragment>
           ))}
       </Grid>
     </ContainerPage>

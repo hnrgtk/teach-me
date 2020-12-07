@@ -71,3 +71,10 @@ export function hireTeacher(input: HireFormType) {
     .then((res) => res?.statusText)
     .catch((err) => console.log(err));
 }
+
+export function rateTeacher(input: any) {
+  return api
+    .post(`v1/aula/avaliarProfessor`, { ...input })
+    .then((res) => res?.statusText)
+    .catch((err) => console.log(err));
+}
