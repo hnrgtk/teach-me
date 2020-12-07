@@ -53,5 +53,17 @@ export const useStyles = makeStyles((theme: Theme) =>
         },
       },
     },
+    title: {
+      paddingBottom: 0,
+    },
+    dialog: {
+      display: "flex",
+      justifyContent: "center",
+      padding: 12,
+    },
+    input: {
+      width: "100%",
+      marginTop: 6,
+    },
   })
 );

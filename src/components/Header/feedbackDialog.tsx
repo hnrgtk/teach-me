@@ -1,41 +1,19 @@
+import { Dialog, DialogContent, Grid } from "@material-ui/core";
 import React, { useState } from "react";
-import {
-  createStyles,
-  Dialog,
-  DialogContent,
-  Grid,
-  makeStyles,
-} from "@material-ui/core";
 import { UseFormMethods } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { FeedbackFormType } from ".";
 import { ButtonTM } from "../../components/ButtonTM";
 import { InputCTL } from "../../components/InputTM/inputCTL";
 import { DialogTitle } from "../../pages/Teacher/styles";
-import { FeedbackFormType } from ".";
 import { rateTeacher } from "../../services/teacherService";
+import { useStyles } from "./styles";
 
 type Props = {
   formHandlers: UseFormMethods<FeedbackFormType>;
   open: boolean;
   onClose: () => void;
 };
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    title: {
-      paddingBottom: 0,
-    },
-    dialog: {
-      display: "flex",
-      justifyContent: "center",
-      padding: 12,
-    },
-    input: {
-      width: "100%",
-      marginTop: 6,
-    },
-  })
-);
 
 export default function FeedbackDialog({ formHandlers, open, onClose }: Props) {
   const classes = useStyles();

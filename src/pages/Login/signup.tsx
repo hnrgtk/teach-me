@@ -11,10 +11,12 @@ import { SignUpFormType, signUpSchema } from "./formType";
 import { Container, SignInButton, SignUpBox } from "./styles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpVariables } from "../../services/servicesTypes";
+import { useHistory } from "react-router-dom";
 
 export default function SignUp() {
   const [{ data: scholarity }] = useAxios("/v1/escolaridade");
   const [loading, setLoading] = useState<boolean>(false);
+  const history = useHistory();
 
   const { control, handleSubmit, errors } = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),
@@ -34,7 +36,7 @@ export default function SignUp() {
       telefone: values.telefone.replace(/[^a-zA-Z0-9 ]/g, ""),
     } as SignUpVariables;
 
-    signUp(input, setLoading);
+    signUp(input, setLoading, history);
   }
 
   return (

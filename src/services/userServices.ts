@@ -21,13 +21,14 @@ export async function signIn(values: LoginFormType, history: any) {
 
 export function signUp(
   variables: SignUpVariables,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  history: any,
 ) {
   api
     .post("v1/usuario/cadastrar", {
       ...variables,
     })
-    .then((res) => console.log(res))
+    .then((res) => history.push("/home"))
     .catch((err) => console.log(err))
     .finally(() => setLoading(false));
 }
