@@ -10,28 +10,14 @@ import {
   Menu,
   MenuItem,
   Box,
+  fade,
+  InputBase,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import { useLogin } from "../../utils/login";
 import { Link, useHistory } from "react-router-dom";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    toolbar: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    titleBox: {
-      cursor: "pointer",
-    },
-  })
-);
+import SearchIcon from "@material-ui/icons/Search";
+import { useStyles } from "./styles";
 
 export default function Header() {
   const classes = useStyles();
@@ -55,10 +41,14 @@ export default function Header() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <Box onClick={() => history.push("/home")} className={classes.titleBox}>
+        <Toolbar>
+          <Box
+            onClick={() => history.push("/home")}
+            className={classes.titleBox}
+          >
             <Typography variant="h6">TEACH ME!</Typography>
           </Box>
+          <div className={classes.root} />
           <IconButton onClick={handleMenu} color="inherit">
             <AccountCircle />
           </IconButton>

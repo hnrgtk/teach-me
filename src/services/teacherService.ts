@@ -37,17 +37,18 @@ export type TeacherApplicationForm = {
   valorHora: number;
 };
 
-export function getTeachers(
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  id?: number,
-  nome?: string,
-  disciplina?: string
-) {
+export function getTeachers() {
   return api
-    .get(`v1/professor?id=${id}&nome=${nome}&disciplina=${disciplina}`)
-    .then((res) => res.data as Array<Teacher>)
-    .catch((err) => console.log(err))
-    .finally(() => setLoading(false));
+    .get(`v1/professor`)
+    .then((res) => res?.data)
+    .catch((err) => console.log(err));
+}
+
+export function searchTeachers(nome?: string, disciplina?: string) {
+  return api
+    .get(`v1/professor?nome=${nome ?? ""}&disciplina=${disciplina ?? ""}`)
+    .then((res) => res.data)
+    .catch((err) => console.log(err));
 }
 
 export function getTeacherById(id: string) {

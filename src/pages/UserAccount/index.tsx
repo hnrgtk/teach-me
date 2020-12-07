@@ -31,8 +31,11 @@ const useStyles = makeStyles(() =>
 
 export default function UserAccount() {
   const classes = useStyles();
-  const { getUserId } = useLogin();
+  const { getUserId, getUserCharge } = useLogin();
   const id = getUserId();
+  const charge = getUserCharge();
+  console.log(charge);
+
   const [open, setOpen] = useState<boolean>(false);
 
   const formHandlers = useForm<SignUpFormType>({
@@ -42,7 +45,7 @@ export default function UserAccount() {
     resolver: yupResolver(becomeATeacherSchema),
   });
 
-  const { reset, handleSubmit } = formHandlers;
+  const { reset } = formHandlers;
   const { reset: resetTeacher } = formTeacher;
 
   const handleClose = () => setOpen(false);
@@ -74,14 +77,22 @@ export default function UserAccount() {
       />
       <ContainerPage className={classes.container}>
         <Typography align="center" variant="h5">
-          Seus Dados
+         Dados da Conta
         </Typography>
         <UserForm formHandlers={formHandlers} disableInputs />
-        <Grid container item xs={12} justify="center" className={classes.grid}>
-          <ButtonTM width="140px" height="40px" onClick={() => setOpen(true)}>
-            Tornar Professor
-          </ButtonTM>
-        </Grid>
+        {charge !== "professor" && (
+          <Grid
+            container
+            item
+            xs={12}
+            justify="center"
+            className={classes.grid}
+          >
+            <ButtonTM width="140px" height="40px" onClick={() => setOpen(true)}>
+              Tornar Professor
+            </ButtonTM>
+          </Grid>
+        )}
       </ContainerPage>
     </>
   );

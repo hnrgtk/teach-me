@@ -4,7 +4,9 @@ export function useLogin() {
   function getUserId() {
     return localStorage.getItem("userId") || "";
   }
+  const getUserCharge = () => localStorage.getItem("userCharge");
+
   const logout = () => localStorage.removeItem("loginToken");
 
-  return { isUserLogged, getToken, getUserId, logout };
+  return { isUserLogged, getToken, getUserId, logout, getUserCharge };
 }

@@ -13,6 +13,7 @@ export async function signIn(values: LoginFormType, history: any) {
     .then((res) => {
       localStorage.setItem("loginToken", String(res?.data.token));
       localStorage.setItem("userId", String(res?.data.id));
+      localStorage.setItem("userCharge", String(res?.data.cargo));
       history.push("/home");
     })
     .catch((err) => console.log(err));

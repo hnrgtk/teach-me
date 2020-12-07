@@ -11,26 +11,8 @@ import { SignUpFormType, signUpSchema } from "./formType";
 import { Container, SignInButton, SignUpBox } from "./styles";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SignUpVariables } from "../../services/servicesTypes";
+import { scholarity } from "../../utils/autoCompleteValues";
 
-export const scholarity = [
-  {
-    id: "251ea368-439a-044f-83d1-a13129ca1809",
-    descricao: "Ensino Fundamental",
-  },
-  { id: "9a4343ba-f0da-9a46-bbe8-9c6c98cee730", descricao: "Ensino Médio" },
-  {
-    id: "d32dc974-9d6a-3f4d-a7ed-cf6c9f3b886b",
-    descricao: "Cursando o Ensino Superior",
-  },
-  {
-    id: "86a80e90-6a15-a348-9d60-1259efcdc2d7",
-    descricao: "Ensino Superior Completo",
-  },
-  { id: "df3c3870-fb00-f04f-a3e9-71d2abe917f1", descricao: "Pós Graduação" },
-  { id: "ab740c2f-2bf6-6e42-9629-90e7777bdace", descricao: "Mestrado" },
-  { id: "463bad74-8c63-774e-b0f1-9eeea5edf3e2", descricao: "Doutorado" },
-
-];
 export default function SignUp() {
   const { control, handleSubmit, errors } = useForm<SignUpFormType>({
     resolver: yupResolver(signUpSchema),

@@ -15,7 +15,7 @@ import {
   becomeATeacher,
   TeacherApplicationForm,
 } from "../../services/teacherService";
-import { scholarity } from "../Login/signup";
+import { scholarity, disciplines, teachingType } from "../../utils/autoCompleteValues";
 import { DialogTitle } from "../Teacher/styles";
 import { BecomeATeacherFormType } from "./formType";
 
@@ -25,58 +25,6 @@ type Props = {
   onClose: () => void;
 };
 
-const disciplines = [
-  {
-    id: "1056a41f-72c5-4542-b085-1fea025c0047",
-    descricao: "Artes",
-    ativo: true,
-  },
-  {
-    id: "463305c3-0368-d04d-827d-7fabeb13b6f2",
-    descricao: "Sociologia",
-    ativo: true,
-  },
-  {
-    id: "5bad8c21-086f-5449-9068-1b53106fa01c",
-    descricao: "Música",
-    ativo: true,
-  },
-  {
-    id: "6d61b02d-83ab-bf42-849a-44e4e0cce708",
-    descricao: "História",
-    ativo: true,
-  },
-  {
-    id: "8dbb1362-0964-c646-9441-bd81f55e3077",
-    descricao: "Matemática",
-    ativo: true,
-  },
-  {
-    id: "95a13821-0932-c441-aff4-c8bb16b614bd",
-    descricao: "Geografia",
-    ativo: true,
-  },
-  {
-    id: "bce3194f-0918-3844-a904-d8d49182d1c9",
-    descricao: "Ciência",
-    ativo: true,
-  },
-  {
-    id: "d91f8066-8d86-a24e-a09c-a15a5229a699",
-    descricao: "Filosofia",
-    ativo: true,
-  },
-  {
-    id: "db4aa406-34b9-4443-bd2c-3cae86c764db",
-    descricao: "Português",
-    ativo: true,
-  },
-];
-
-const teachingType = [
-  { id: "52f8ad76-8f5a-474b-b8d4-e3274db20113", descricao: "EAD" },
-  { id: "c82fa32e-a3a1-b540-8d04-a591b21ce307", descricao: "Presencial" },
-];
 const useStyles = makeStyles(() =>
   createStyles({
     title: {
@@ -101,7 +49,7 @@ export default function BecomeATeacherDialog({
 }: Props) {
   const classes = useStyles();
   const { push } = useHistory();
-  const { control, errors, handleSubmit} = formHandlers;
+  const { control, errors, handleSubmit } = formHandlers;
   const [status, setStatus] = useState<Record<string, string | string>>();
 
   async function onSubmit(values: BecomeATeacherFormType) {
@@ -117,8 +65,6 @@ export default function BecomeATeacherDialog({
       modalidadeEnsinoId: values.modalidadeEnsinoId.id,
       escolaridaPubAlvoId: values.escolaridaPubAlvoId.id,
     } as TeacherApplicationForm;
-
-    console.log(input);
 
     const statusText = await becomeATeacher(input);
     setStatus(

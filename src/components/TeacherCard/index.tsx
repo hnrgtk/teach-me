@@ -40,7 +40,7 @@ export default function TeacherCard({ teacher }: Props) {
       >
         <CardMedia
           className={classes.cover}
-          image="https://scontent.fssa8-1.fna.fbcdn.net/v/t31.0-8/12829000_765396683590910_5081846554797437819_o.jpg?_nc_cat=111&ccb=2&_nc_sid=09cbfe&_nc_eui2=AeExbOx8xempsveFGqwIofSj2OjxaynXuD7Y6PFrKde4PlOcvFt-1UqLTWXGmN16semzvEYuo2QvYDC3gzUtbiJp&_nc_ohc=JvqOKlwEd34AX8Kltkj&_nc_ht=scontent.fssa8-1.fna&oh=b171ca94c031523c97f775e5a6c8003d&oe=5FE9870C"
+          image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLuox6vatPBS6w8edvrLbqXzHimyKXOVejMQ&usqp=CAU"
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
@@ -51,10 +51,10 @@ export default function TeacherCard({ teacher }: Props) {
               {teacher.disciplinas[0].descricao}
             </Typography>
             <Typography variant="subtitle1" color="textSecondary">
-              {teacher.descricao}
-            </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
               Nota: {teacher.notaMedia}
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              {teacher.descricao}
             </Typography>
           </CardContent>
         </div>

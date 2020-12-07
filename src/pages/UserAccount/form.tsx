@@ -4,7 +4,7 @@ import { InputCTL } from "../../components/InputTM/inputCTL";
 import { MaskedInputCTL } from "../../components/InputTM/maskedInput";
 import { AutoCompleteCTL } from "../../components/SelectTM/AutoCompleteCTL";
 import { ContainerPage } from "../../styles";
-import { scholarity } from "../Login/signup";
+import { scholarity } from "../../utils/autoCompleteValues";
 
 type Props = {
   formHandlers: any;
