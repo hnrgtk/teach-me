@@ -1,42 +1,53 @@
 import React from "react";
 import {
   AppBar,
-  Toolbar,
-  Typography,
-  createStyles,
-  makeStyles,
-  Theme,
+  Badge,
+  Box,
   IconButton,
   Menu,
   MenuItem,
-  Box,
-  fade,
-  InputBase,
+  Toolbar,
+  Typography,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import { useLogin } from "../../utils/login";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 import { Link, useHistory } from "react-router-dom";
-import SearchIcon from "@material-ui/icons/Search";
+import { useLogin } from "../../utils/login";
 import { useStyles } from "./styles";
 
 export default function Header() {
   const classes = useStyles();
   const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [
+    anchorElNotification,
+    setAnchorElNotification,
+  ] = React.useState<null | HTMLElement>(null);
+
   const { logout } = useLogin();
 
   const open = Boolean(anchorEl);
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const openNotification = Boolean(anchorElNotification);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorEl(event.currentTarget);
+
+  const handleNotificationMenu = (event: React.MouseEvent<HTMLElement>) =>
+    setAnchorElNotification(event.currentTarget);
+
+  const handleClose = () => setAnchorEl(null);
+  const handleCloseNotification = () => setAnchorElNotification(null);
+
   const handleLogout = () => {
     logout();
     history.push("/");
   };
+
+  const not = [
+    { text: "Avaliação pendente" },
+    { text: "Avaliação pendente" },
+    { text: "Avaliação pendente" },
+  ];
 
   return (
     <div className={classes.root}>
@@ -49,6 +60,22 @@ export default function Header() {
             <Typography variant="h6">TEACH ME!</Typography>
           </Box>
           <div className={classes.root} />
+
+          <IconButton color="inherit" onClick={handleNotificationMenu}>
+            <Badge badgeContent={not.length} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <Menu
+            anchorEl={anchorElNotification}
+            open={openNotification}
+            onClose={handleCloseNotification}
+          >
+            {not.map((n) => (
+              <MenuItem>{n.text}</MenuItem>
+            ))}
+          </Menu>
+
           <IconButton onClick={handleMenu} color="inherit">
             <AccountCircle />
           </IconButton>

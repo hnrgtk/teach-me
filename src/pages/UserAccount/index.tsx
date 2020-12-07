@@ -77,7 +77,7 @@ export default function UserAccount() {
       />
       <ContainerPage className={classes.container}>
         <Typography align="center" variant="h5">
-         Dados da Conta
+          Dados da Conta
         </Typography>
         <UserForm formHandlers={formHandlers} disableInputs />
         {charge !== "professor" && (

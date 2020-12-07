@@ -15,7 +15,11 @@ import {
   becomeATeacher,
   TeacherApplicationForm,
 } from "../../services/teacherService";
-import { scholarity, disciplines, teachingType } from "../../utils/autoCompleteValues";
+import {
+  disciplines,
+  scholarity,
+  teachingType,
+} from "../../utils/autoCompleteValues";
 import { DialogTitle } from "../Teacher/styles";
 import { BecomeATeacherFormType } from "./formType";
 
@@ -78,9 +82,12 @@ export default function BecomeATeacherDialog({
             color: "#ff0000",
           }
     );
-    statusText && setTimeout(() => push("/home"), [1000]);
 
-    setStatus({ text: "", color: "" });
+    console.log(status);
+    localStorage.setItem("userCharge", "professor");
+    // statusText && setTimeout(() => push("/home"), [1000]);
+
+    // setStatus({ text: "", color: "" });
   }
   return (
     <Dialog open={open} fullWidth maxWidth="xs">

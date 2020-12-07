@@ -80,7 +80,7 @@ export default function Home() {
           xs={3}
           container
           alignItems="center"
-          style={{ marginTop: 6 }}
+          style={{ marginTop: 8 }}
         >
           <ButtonTM
             width="50%"
